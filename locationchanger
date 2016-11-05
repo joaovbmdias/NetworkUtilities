@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# automatically change configuration of Mac OS X based on location
+# author: Rocco Georgi <rocco@pavingways.com>
+# version: 0.3.1
+
+# original author: Onne Gorter <o.gorter@gmail.com>
+# url: http://tech.inhelsinki.nl/locationchanger/
+# version: 0.4
+
+# redirect all IO to a logfile
+exec &>/usr/local/var/log/locationchanger.log
+# redirect all IO to /dev/null (comment this in if you don#t want to write to logfile)
+#exec 1>/dev/null 2>/dev/null
+
+# get a little breather before we get data for things to settle down
+sleep 2
+
+# get SSID
+SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | grep ' SSID:' | cut -d ':' -f 2 | tr -d ' '`
+echo `date` "New SSID found: $SSID"
+
+# empty location var
+LOCATION=
+
+# LOCATIONS 
+# (use to be used Location name here)
+# =============================================
+Location_Automatic="Automatic"
+Location_LibertySeguros="LibertySeguros"
+Location_CP="CP"
+
+# SSIDS
+# =====
+SSID_Corporate=Corporate
+SSID_CorporateQA=CorporateQA
+SSID_CorporateDEV=CorporateDEV
+SSID_CP="CP\ ALFA\ 4006\ CARR\ 1"
+
+
+# SSID -> LOCATION mapping
+case $SSID in
+	$SSID_Corporate    ) LOCATION="$Location_LibertySeguros";;
+	$SSID_CorporateQA  ) LOCATION="$Location_LibertySeguros";;
+	$SSID_CorporateDEV ) LOCATION="$Location_LibertySeguros";;
+	"CP *"             ) LOCATION="$Location_CP";;
+esac
+	REASON="SSID changed to $SSID"
+
+
+# still didn't get a location -> use Location_Automatic
+if [ -z "$LOCATION" ]; then
+	LOCATION="$Location_Automatic"
+	REASON="Automatic Fallback"
+fi
+
+# change network location
+scselect "$LOCATION"
+
+case $LOCATION in
+	$Location_Automatic )
+		# do stuff here you would do in Location_Automatic
+	;;
+	
+	$Location_LibertySeguros )
+		# nothing special here
+	;;
+	
+	$Location_CP )
+		# nothing special here
+	;;
+esac
+
+echo "--> Location Changer: $LOCATION - $REASON"
+
+exit 0
