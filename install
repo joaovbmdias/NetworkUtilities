@@ -1,13 +1,10 @@
 #!/bin/bash
 
 cp locationchanger /usr/local/bin
-chmod 755 /usr/local/bin/locationchanger
 cp com.networkutilities.locationchanger.plist ~/Library/LaunchAgents/
-chown root:wheel ~/Library/LaunchAgents/com.networkutilities.locationchanger.plist
 launchctl load ~/Library/LaunchAgents/com.networkutilities.locationchanger.plist
 
 cp wifionoff /usr/local/bin
 chmod 755 /usr/local/bin/wifionoff
-cp com.networkutilities.wifionoff.plist ~/Library/LaunchAgents/
-chown root:wheel ~/Library/LaunchAgents/com.networkutilities.wifionoff.plist
-launchctl load ~/Library/LaunchAgents/com.networkutilities.wifionoff.plist
+cp com.networkutilities.wifionoff.plist /Library/LaunchDaemons/
+chown root:wheel /Library/LaunchDaemons/com.networkutilities.wifionoff.plist
