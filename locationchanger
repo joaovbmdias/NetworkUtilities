@@ -35,7 +35,7 @@ Location_CP="CP"
 SSID_Corporate=Corporate
 SSID_CorporateQA=CorporateQA
 SSID_CorporateDEV=CorporateDEV
-SSID_CP="CP\ ALFA\ 4006\ CARR\ 1"
+SSID_CP="CPALFA40"
 
 
 # SSID -> LOCATION mapping
@@ -43,7 +43,7 @@ case $SSID in
 	$SSID_Corporate    ) LOCATION="$Location_LibertySeguros";;
 	$SSID_CorporateQA  ) LOCATION="$Location_LibertySeguros";;
 	$SSID_CorporateDEV ) LOCATION="$Location_LibertySeguros";;
-	"CP *"             ) LOCATION="$Location_CP";;
+	CPALFA40*         ) LOCATION="$Location_CP";;
 esac
 	REASON="SSID changed to $SSID"
 
