@@ -23,7 +23,7 @@ echo `date` "New SSID found: $SSID"
 # empty location var
 LOCATION=
 
-# LOCATIONS 
+# LOCATIONS
 # (use to be used Location name here)
 # =============================================
 Location_Automatic="Automatic"
@@ -33,6 +33,7 @@ Location_CP="CP"
 # SSIDS
 # =====
 SSID_Corporate=Corporate
+SSID_L_Corporate=L_Corporate
 SSID_CorporateQA=CorporateQA
 SSID_CorporateDEV=CorporateDEV
 SSID_CP="CPALFA40"
@@ -41,9 +42,10 @@ SSID_CP="CPALFA40"
 # SSID -> LOCATION mapping
 case $SSID in
 	$SSID_Corporate    ) LOCATION="$Location_LibertySeguros";;
+	$SSID_L_Corporate  ) LOCATION="$Location_LibertySeguros";;
 	$SSID_CorporateQA  ) LOCATION="$Location_LibertySeguros";;
 	$SSID_CorporateDEV ) LOCATION="$Location_LibertySeguros";;
-	CPALFA40*         ) LOCATION="$Location_CP";;
+	CPALFA40*          ) LOCATION="$Location_CP";;
 esac
 	REASON="SSID changed to $SSID"
 
@@ -61,11 +63,11 @@ case $LOCATION in
 	$Location_Automatic )
 		# do stuff here you would do in Location_Automatic
 	;;
-	
+
 	$Location_LibertySeguros )
 		# nothing special here
 	;;
-	
+
 	$Location_CP )
 		# nothing special here
 	;;
