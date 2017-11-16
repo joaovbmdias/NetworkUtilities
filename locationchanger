@@ -14,7 +14,7 @@ exec &>/usr/local/var/log/locationchanger.log
 #exec 1>/dev/null 2>/dev/null
 
 # get a little breather before we get data for things to settle down
-sleep 2
+sleep 10
 
 # get SSID
 SSID=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | grep ' SSID:' | cut -d ':' -f 2 | tr -d ' '`
@@ -29,14 +29,17 @@ LOCATION=
 Location_Automatic="Automatic"
 Location_LibertySeguros="LibertySeguros"
 Location_CP="CP"
+Location_Home="Home"
 
 # SSIDS
 # =====
 SSID_Corporate=Corporate
-SSID_L_Corporate=L_Corporate
+SSID_L_Corporate=L-Corporate
 SSID_CorporateQA=CorporateQA
 SSID_CorporateDEV=CorporateDEV
-SSID_CP="CPALFA40"
+SSID_CPALFA=CPALFA*
+SSID_CPIAB=CPIAB*
+SSID_HOME=PipocaSemFios*
 
 
 # SSID -> LOCATION mapping
@@ -45,7 +48,9 @@ case $SSID in
 	$SSID_L_Corporate  ) LOCATION="$Location_LibertySeguros";;
 	$SSID_CorporateQA  ) LOCATION="$Location_LibertySeguros";;
 	$SSID_CorporateDEV ) LOCATION="$Location_LibertySeguros";;
-	CPALFA40*          ) LOCATION="$Location_CP";;
+        CPALFA*            ) LOCATION="$Location_CP";;
+        CPIAB*             ) LOCATION="$Location_CP";;
+        PipocaSemFios*     ) LOCATION="$Location_Home";;
 esac
 	REASON="SSID changed to $SSID"
 
@@ -61,15 +66,27 @@ scselect "$LOCATION"
 
 case $LOCATION in
 	$Location_Automatic )
-		# do stuff here you would do in Location_Automatic
+		osascript -e 'quit app "Colors"'
+		open -a "Fantastical 2" --hide
+		open -a "Todoist" --hide
 	;;
 
 	$Location_LibertySeguros )
-		# nothing special here
+		osascript -e 'quit app "Colors"'
+                osascript -e 'quit app "Fantastical 2"'
+                osascript -e 'quit app "Todoist"'
 	;;
 
 	$Location_CP )
-		# nothing special here
+		osascript -e 'quit app "Colors"'
+                open -a "Fantastical 2" --hide
+		open -a "Todoist" --hide
+	;;
+
+        $Location_Home )
+                open -a "Colors" --hide
+                open -a "Fantastical 2" --hide
+		open -a "Todoist" --hide
 	;;
 esac
 
